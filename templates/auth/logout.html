@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="container mt-4">
+    <h1>You have been logged out.</h1>
+    <button type="submit" class="btn btn-primary mt-3"><a href="{% url 'login' %}" style="color: white;">Log in again</a></button>
+</div>
+
+{% endblock content %}
