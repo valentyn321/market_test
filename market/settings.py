@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     #installed apps:
-    'crispy_forms'
+    'crispy_forms',
+    'cart',
 ]
 
 MIDDLEWARE = [
