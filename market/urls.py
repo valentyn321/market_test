@@ -5,6 +5,7 @@ from django.contrib.auth.views import LoginView, LogoutView
 
 from cart import views as crt_views
 from stats import views as stt_views
+from main import views as mn_views
 
 from django.contrib.auth.decorators import login_required
 
@@ -27,14 +28,20 @@ urlpatterns = [
     ),
 
     path(
-        'create_product',
+        'create_product/',
         login_required(crt_views.ProductView.as_view()),
         name="create_product"
     ),
 
     path(
-        'stats',
+        'stats/',
         login_required(stt_views.StatsTemplateView.as_view()),
         name="stats"
+    ),
+
+    path(
+        '',
+        mn_views.ProductListView.as_view(),
+        name='main'
     )
 ]

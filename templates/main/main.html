@@ -5,7 +5,14 @@
 {% block content %}
 
 <div class="container mt-4">
-
+    <h1>Products</h1>
+    <ul>
+    {% for product in object_list %}
+        <li>{{ product.title  }} - {{ product.price }} ........................(added by {{product.author}})</li>
+    {% empty %}
+        <li>No products yet.</li>
+    {% endfor %}
+    </ul>
 </div>
 
 
