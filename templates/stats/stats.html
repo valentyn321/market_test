@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="container mt-4">
+    <h1>Statistics</h1>
+    <p>You created <b>{{ my_items }}</b> products.</p>
+    <p>There are <b>{{ all_items }}</b> products on this site.</p>
+    <p>Your max price is <b>{{ my_max_price }}</b>.</p>
+    <p>Averege price on site is <b>{{ averege_price }}</b>.</p>
+    <p>All your products cost <b>{{ my_sum }}</b>.</p>    
+    <p>Your products and products, which cost more than 50, or their title is longer than 3: <b>{{ special }}</b></p>
+    <div>
+      <form method="POST">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-success">Raise the prices</button>        
+      </form>  
+    </div>
+</div>
+
+
+
+{% endblock content %}

@@ -20,12 +20,9 @@ class TestModels(TestCase):
             assert(field in self.product._meta.fields)
 
 
-class TestViews(TestCase):
+class TestViewsCart(TestCase):
     def test_productcreate(self):
-        """Here we check our view ProductCreate, because there is a lot of
-        custom code, not only Django-packed"""
+        """Here we check our view ProductCreate, if it require login"""
         client = Client()
         response = client.get(reverse('create_product'))
-        self.assertTemplateUsed(response, 'cart/create_product.html')
-        self.assertContains(response, "id_title")
-        self.assertContains(response, "id_price")
+        self.assertEqual(response.status_code, 302)

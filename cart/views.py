@@ -17,6 +17,6 @@ class ProductView(FormView):
             obj = form.save(commit=False)
             obj.author = request.user
             obj.save()
-            return redirect('create_product')
+            return redirect('stats')
         else:
             return render(request, self.template_name, {'form': form})
