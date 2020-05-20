@@ -17,13 +17,25 @@ class StatsTemplateView(TemplateView):
 
         all_items = Product.objects.count()
 
-        my_max_price = round(Product.objects.filter(
-            author=request.user).aggregate(Max('price'))['price__max'], 2)
+        my_max_price = Product.objects.filter(
+            author=request.user).aggregate(Max('price'))['price__max']
+        if my_max_price is None:
+            my_max_price = 0
+        else:
+            my_max_price = round(my_max_price, 2)
 
         averege_price = Product.objects.aggregate(Avg('price'))['price__avg']
+        if averege_price is None:
+            averege_price = 0
+        else:
+            averege_price = round(averege_price, 2)
 
         my_sum = Product.objects.filter(
             author=request.user).aggregate(Sum('price'))['price__sum']
+        if my_sum is None:
+            my_sum = 0
+        else:
+            my_sum = round(my_sum, 2)
 
         my_sum_nude = Product.objects.filter(
             author=request.user)
@@ -32,7 +44,7 @@ class StatsTemplateView(TemplateView):
 
         price_gt50 = Product.objects.filter(title__gt=3)
 
-        special = round((my_sum_nude&title_gt3|price_gt50).aggregate(Sum('price'))['price__sum'],2)
+        special = (my_sum_nude&title_gt3|price_gt50).aggregate(Sum('price'))['price__sum']
 
         context = {
             'my_items': my_items,
