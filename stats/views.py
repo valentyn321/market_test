@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.db.models import Max, Avg, Sum
+from django.db.models import Max, Avg, Sum, F, Q
 from django.views.generic.base import TemplateView
 from django.db.models.functions import Length
 
@@ -42,9 +42,11 @@ class StatsTemplateView(TemplateView):
 
         title_gt3 = Product.objects.annotate(alias=Length('title')).filter(alias__gt=3)
 
-        price_gt50 = Product.objects.filter(title__gt=3)
+        price_gt50 = Product.objects.filter(price__gt=50)
 
         special = (my_sum_nude&title_gt3|price_gt50).aggregate(Sum('price'))['price__sum']
+
+        # special = Product.objects.filter(Q() | Q(price__gt=50), author=request.user)
 
         context = {
             'my_items': my_items,
@@ -60,8 +62,6 @@ class StatsTemplateView(TemplateView):
     def post(self, request, *args, **kwargs):
 
         my_objs = Product.objects.filter(author=request.user)
-        for obj in my_objs:
-            obj.price += 1
-            obj.save()
+        my_objs.update(price=F('price') + 1)
 
         return redirect("stats")
